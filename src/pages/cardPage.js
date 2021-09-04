@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { css } from '@emotion/css';
 import { useParams } from 'react-router';
 
@@ -15,6 +15,15 @@ import printerIcon from '../assets/svg/printer.svg';
 
 const Card = () => {
 	const { category, id } = useParams();
+
+	const tableRef = useRef();
+
+	function moveCards(i) {
+		tableRef.current.children[i + 1].style = 'transform: translateY(368px)';
+		setTimeout(() => {
+			tableRef.current.children[i + 2].style = 'transition: all 0; transform: translateY(20px);';
+		}, 600);
+	}
 
 	return (
 		<>
@@ -199,22 +208,26 @@ const Card = () => {
 					Стоимость с НДС
 				</P>	
 			</div>
-			<PriceCard
-				name='ООО “АРГО”'
-				inn={6617787438}
-				articul={101010}
-				region={`
-				г Байконур, АО Чукотский, АО Ямало-Ненецкий, г Москва, Ханты-Мансийский АО - Югра, АО Ненецкий....
-				`}
-				price={210} />
-			<PriceCard
-				name='ООО “АРГО”'
-				inn={6617787438}
-				articul={101010}
-				region={`
-				г Байконур, АО Чукотский, АО Ямало-Ненецкий, г Москва, Ханты-Мансийский АО - Югра, АО Ненецкий....
-				`}
-				price={210} />
+			<div ref={tableRef}>
+				<PriceCard
+					name='ООО “АРГО”'
+					inn={6617787438}
+					articul={101010}
+					region={`
+					г Байконур, АО Чукотский, АО Ямало-Ненецкий, г Москва, Ханты-Мансийский АО - Югра, АО Ненецкий....
+					`}
+					price={210}
+					callback={() => moveCards(0)} />
+				<PriceCard
+					name='ООО “АРГО”'
+					inn={6617787438}
+					articul={101010}
+					region={`
+					г Байконур, АО Чукотский, АО Ямало-Ненецкий, г Москва, Ханты-Мансийский АО - Югра, АО Ненецкий....
+					`}
+					price={210}
+					callback={() => moveCards(0)} />
+			</div>
 		</>
 	);
 };

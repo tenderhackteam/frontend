@@ -2,18 +2,21 @@ import React, { useState, useRef } from 'react';
 import { css } from '@emotion/css';
 import PropTypes from 'prop-types';
 import P from '../p';
+import RecomendCard from '../recomend-card';
 
 import succesIcon from '../../assets/svg/success.svg';
 import minusIcon from '../../assets/svg/minus.svg';
 import plusIcon from '../../assets/svg/plus.svg';
 
-const PriceCard = ({ name, inn, articul, region, price }) => {
+const PriceCard = ({ name, inn, articul, region, price, callback }) => {
 	const [animState, setAnimState] = useState(0);
+	const [recomendBlock, setRecomendBlock] = useState();
 	const [score, setScore] = useState(1);
 
 	const buttonRef = useRef();
 	const successRef = useRef();
 	const scoreRef = useRef();
+	const recomendBlockRef = useRef();
 
 	function getButton() {
 		switch(animState) {
@@ -169,9 +172,61 @@ const PriceCard = ({ name, inn, articul, region, price }) => {
 			successRef.current.style = 'opacity: 0';
 		}, 1800);
 		setTimeout(() => {
+			callback();
 			setAnimState(2);
 			scoreRef.current.style = 'opacity: 1';
 		}, 2100);
+		setTimeout(() => {
+			setRecomendBlock(
+				<div
+					className={css`
+						transition: all .4s;
+						padding: 0 54px;
+						opacity: 0;
+					`}
+					ref={recomendBlockRef}
+				>
+					<p className={css`
+						font-family: Open Sans;
+						font-style: normal;
+						font-weight: bold;
+						font-size: 20px;
+						line-height: 27px;
+						color: #1A1A1A;
+					`}
+					>
+						С этим товаром часто покупают
+					</p>
+					<div className={css`
+						display: flex;
+						justify-content: space-between;
+						flex-wrap: wrap;
+					`}
+					>
+						<RecomendCard
+							category='Банкетки'
+							name='Банкетка фортепианная Yamaha BC-2647'
+							price={12129}
+							count={2} />
+						<RecomendCard
+							category='Педали для рояля'
+							name='Педаль Vision AP-PD03'
+							price={1530}
+							count={19} />
+						<RecomendCard
+							category='Мелкие аксессуары'
+							name='Держатель для планшета на рояль Vision AD-SA28'
+							price={1130}
+							count={17} />
+						<RecomendCard
+							category='Банкетки'
+							name='Банкетка фортепианная Yamaha CX-6742'
+							price={9150}
+							count={3} />
+					</div>
+				</div>);
+			recomendBlockRef.current.style = 'opacity: 1';
+		}, 2700);
 	}
 
 	function minusButton(e) {
@@ -186,109 +241,114 @@ const PriceCard = ({ name, inn, articul, region, price }) => {
 	}
 
 	return (
-		<div className={css`
-			padding: 14px 70px;
-			display: grid;
-			grid-template-columns: minmax(333px, 0) minmax(333px, 0) 230px auto;
-			column-gap: 75px;
-		`}
-		>
-			<div>
-				<P
-					className={css`
-						margin-bottom: 8px;
-					`}
-					type='bold-black'
-				>
-					{name}
-				</P>
-				<P
-					className={css`
-						margin-bottom: 8px;
-					`}
-					type='regular-grey'
-				>
-					ИНН:
-					{inn}
-				</P>
-				<P
-					className={css`
-						margin-bottom: 8px;
-					`}
-					type='regular-grey'
-				>
-					Артикул:
-					{articul}
-				</P>
-			</div>
-			<div>
-				<P 
-					className={css`
-						margin-bottom: 8px;
-					`}
-					type='regular-grey'
-				>
-					Номер предложения: №
-					{articul}
-				</P>
-				<P
-					className={css`
-						margin-bottom: 8px;
-					`}
-					type='regular-grey'
-				>
-					Сроки поставки: 1 - 60 дней
-				</P>
-				<P
-					className={css`
-						margin-bottom: 8px;
-					`}
-					type='regular-grey'
-				>
-					Регион поставки:
-					{region}
-				</P>
-			</div>
-			<div>
-				<P
-					className={css`
-						margin-bottom: 8px;
-					`}
-					type='h1-black'
-				>
-					{price}
-					₽
-				</P>
-				<P
-					className={css`
-						margin-bottom: 8px;
-					`}
-					type='regular-grey'
-				>
-					В том числе НДС 20% (
-					{price * 0.2}
-					₽)
-				</P>
-				<P
-					className={css`
-						margin-bottom: 8px;
-					`}
-					type='regular-grey'
-				>
-					Доступно для физ. лиц
-					Доступно для гос. заказчиков
-					с 21.05.2021 по 21.08.2021
-				</P>
-			</div>
+		<>
 			<div className={css`
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
+				padding: 14px 70px;
+				display: grid;
+				grid-template-columns: minmax(333px, 0) minmax(333px, 0) 230px auto;
+				column-gap: 75px;
+				border-bottom: 1px solid #C4C4C4;
+				transition: all .6s;
 			`}
 			>
-				{getButton()}
+				<div>
+					<P
+						className={css`
+							margin-bottom: 8px;
+						`}
+						type='bold-black'
+					>
+						{name}
+					</P>
+					<P
+						className={css`
+							margin-bottom: 8px;
+						`}
+						type='regular-grey'
+					>
+						ИНН:
+						{inn}
+					</P>
+					<P
+						className={css`
+							margin-bottom: 8px;
+						`}
+						type='regular-grey'
+					>
+						Артикул:
+						{articul}
+					</P>
+				</div>
+				<div>
+					<P 
+						className={css`
+							margin-bottom: 8px;
+						`}
+						type='regular-grey'
+					>
+						Номер предложения: №
+						{articul}
+					</P>
+					<P
+						className={css`
+							margin-bottom: 8px;
+						`}
+						type='regular-grey'
+					>
+						Сроки поставки: 1 - 60 дней
+					</P>
+					<P
+						className={css`
+							margin-bottom: 8px;
+						`}
+						type='regular-grey'
+					>
+						Регион поставки:
+						{region}
+					</P>
+				</div>
+				<div>
+					<P
+						className={css`
+							margin-bottom: 8px;
+						`}
+						type='h1-black'
+					>
+						{price}
+						₽
+					</P>
+					<P
+						className={css`
+							margin-bottom: 8px;
+						`}
+						type='regular-grey'
+					>
+						В том числе НДС 20% (
+						{price * 0.2}
+						₽)
+					</P>
+					<P
+						className={css`
+							margin-bottom: 8px;
+						`}
+						type='regular-grey'
+					>
+						Доступно для физ. лиц
+						Доступно для гос. заказчиков
+						с 21.05.2021 по 21.08.2021
+					</P>
+				</div>
+				<div className={css`
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+				`}
+				>
+					{getButton()}
+				</div>
 			</div>
-		</div>
+			{recomendBlock}
+		</> 
 	);
 };
 
@@ -298,6 +358,7 @@ PriceCard.propTypes = {
 	articul: PropTypes.number,
 	region: PropTypes.string,
 	price: PropTypes.number,
+	callback: PropTypes.func,
 };
 
 export default PriceCard;
