@@ -95,6 +95,20 @@ const P = ({ type, children }) => {
 					{children}
 				</p>
 			);
+		case 'grid-1':
+			return (
+				<p className={css`
+					font-family: Open Sans;
+					font-style: normal;
+					font-weight: bold;
+					font-size: 15px;
+					line-height: 20px;
+					color: #1A1A1A;
+				`}
+				>
+					{children}
+				</p>
+			);
 		default:
 			return (
 				<p>
@@ -112,6 +126,7 @@ P.propTypes = {
 		'bold-grey',
 		'bold-black',
 		'h1-black',
+		'grid-1',
 	]),
 	children: PropTypes.string,
 };
