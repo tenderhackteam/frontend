@@ -22,6 +22,7 @@ const Header = () => {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
+			box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.1);
 		`}
 		>
 			<div className={css`
