@@ -1,7 +1,8 @@
+/*eslint-disable*/
 import React, { useRef, useState, useEffect } from 'react';
 import { css } from '@emotion/css';
 import { useParams, useLocation, useHistory } from 'react-router';
-import { getImage } from '../services/service';
+import { getImage, addToSeen, getItemById } from '../services/service';
 
 import BreadCrumbs from '../components/bread-crumbs';
 import DemandedProducts from '../components/demanded-products';
@@ -20,15 +21,106 @@ const Card = () => {
 	const id = useLocation().search.slice(useLocation().search.indexOf('=') + 1);
 	const history = useHistory();
 
-	const [image, setImage] = useState();
+	const [cardData, setCardData] = useState({
+		"id": 2,
+		"cte_id": 34860341,
+		"cte_name": "Светодиодный светильник Geniled",
+		"category_id": "Настенно-потолочные светильники",
+		"description": null,
+		"cte_props": [
+		{
+		"Name": "Вид климатического исполнения",
+		"Id": 363350879,
+		"Value": "УХЛ4"
+		},
+		{
+		"Name": "Вид рассеивателя",
+		"Id": 363350880,
+		"Value": "Опал (матовый)"
+		},
+		{
+		"Name": "Коэффициент мощности",
+		"Id": 363350883,
+		"Value": "0,92"
+		},
+		{
+		"Name": "Вид товаров",
+		"Id": 363465190,
+		"Value": "Энергетическое оборудование"
+		},
+		{
+		"Name": "Вид энергетического оборудования",
+		"Id": 363465191,
+		"Value": "Светильник"
+		},
+		{
+		"Name": "Габаритные размеры (шхгхв)",
+		"Id": 363350881,
+		"Value": "1200x180x40",
+		"Unit": "мм"
+		},
+		{
+		"Name": "Световой поток",
+		"Id": 363350884,
+		"Value": "472",
+		"Unit": "лм"
+		},
+		{
+		"Name": "Цветовая температура",
+		"Id": 363350886,
+		"Value": "4000",
+		"Unit": "К"
+		},
+		{
+		"Name": "Гарантия",
+		"Id": 363350882,
+		"Value": "5",
+		"Unit": "г;^лет"
+		},
+		{
+		"Name": "Степень защиты",
+		"Id": 363350885,
+		"Value": "40",
+		"Unit": "ip"
+		}
+		],
+		"regions": [
+		"Свердловская",
+		"Москва"
+		],
+		"made_contracts": 1,
+		"suppliers": [
+		{
+		"SupplierId": 1559525,
+		"Name": "Общество с ограниченной ответственностью \"НИКА ГРУПП\"",
+		"Inn": "7718882087"
+		},
+		{
+		"SupplierId": 2298333,
+		"Name": "Общество с ограниченной ответственностью «СтройЭнергоКомплект»",
+		"Inn": "7724338809"
+		},
+		{
+		"SupplierId": 27624355,
+		"Name": "ИП Хорзов Владимир Сергеевич",
+		"Inn": "860603847301"
+		}
+		],
+		"country": "РОССИЯ",
+		"other_items_in_contracts": null,
+		"cpgz_id": 12114082,
+		"cpgz_code": "01.10.05.03.01.05",
+		"model": "ЛПО 1200?180?40 40Вт 5000К Опал",
+		"price": null
+		});
+	const [image, setImage] = useState({});
 	const tableRef = useRef();
 	const startRef = useRef();
-
+	
 	useEffect(() => {
 		history.listen((location) => {
 			startRef.current.scrollIntoView();
 			setImage(null);
-			console.log(location.search);
 			getImage(location.search.slice(location.search.indexOf('=') + 1)).then((data) => {
 				if(typeof data === 'string')
 					return data;
@@ -36,12 +128,21 @@ const Card = () => {
 					return data.text();
 			}).then((text) => setImage(text));
 		});
+
+		//addToSeen(id);
+
 		getImage(id).then((data) => {
 			if(typeof data === 'string')
 				return data;
 			else
 				return data.text();
 		}).then((text) => setImage(text));
+
+		getItemById(id)
+			.then((data) => data.json())
+			.then((data) => {
+				setCardData(data[0]);
+			});
 	}, []);
 
 	function moveCards(i) {
@@ -119,7 +220,7 @@ const Card = () => {
 						color: #1A1A1A;
 					`}
 					>
-						Рояль C. Bechstein
+						{cardData.cte_name}
 					</h1>
 					<img src={printerIcon} alt='Printer icon' />
 					<DemandedProducts />
@@ -132,10 +233,10 @@ const Card = () => {
 				>
 					<div>
 						<P type='regular-grey'>
-							Модель: А 228
+							{cardData.cte_props ? cardData.cte_props[0].Name + ': ' + cardData.cte_props[0].Value : ''}
 						</P>
 						<P type='regular-grey'>
-							Производитель: Bechstein
+							{cardData.cte_props ? cardData.cte_props[1].Name + ': ' + cardData.cte_props[1].Value : ''}
 						</P>
 						{getImageOrLoader()}
 					</div>
@@ -148,7 +249,7 @@ const Card = () => {
 								ID CTE
 							</P>
 							<P type='regular-black'>
-								34262386
+								{cardData.cte_id}
 							</P>
 						</MarginBottom>
 						<MarginBottom>
@@ -156,12 +257,13 @@ const Card = () => {
 								Страна происхождения
 							</P>
 							<P type='regular-black'>
-								АЛБАНИЯ
+								{cardData.country}
 							</P>
 						</MarginBottom>
 						<MarginBottom>
 							<P type='h1-black'>
-								739 500 ₽
+								
+								1000 ₽
 							</P>
 							<P type='regular-black'>
 								Штука
@@ -169,10 +271,16 @@ const Card = () => {
 						</MarginBottom>
 						<MarginBottom>
 							<P type='bold-black'>
-								от 739 500 ₽ до 739 500 ₽
+								{'от 1 000'}
+								
+								{' ₽ до '}
+								
+								{'1 000 ₽'}
 							</P>
 							<P type='regular-grey'>
-								на основе 1 предложений поставщиков
+								{'на основе '}
+								{cardData.made_contracts}
+								{' предложений поставщиков'}
 							</P>
 						</MarginBottom>
 						<div className={css`
@@ -208,7 +316,7 @@ const Card = () => {
 								Контракты
 							</P>
 							<P type='bold-black'>
-								1
+								{cardData.made_contracts}
 							</P>
 							<P type='regular-blue'>
 								Показать все
@@ -269,24 +377,19 @@ const Card = () => {
 				</P>	
 			</div>
 			<div ref={tableRef}>
-				<PriceCard
-					name='ООО “АРГО”'
-					inn={6617787438}
-					articul={101010}
-					region={`
-					г Байконур, АО Чукотский, АО Ямало-Ненецкий, г Москва, Ханты-Мансийский АО - Югра, АО Ненецкий....
-					`}
-					price={210}
-					callback={() => moveCards(0)} />
-				<PriceCard
-					name='ООО “АРГО”'
-					inn={6617787438}
-					articul={101010}
-					region={`
-					г Байконур, АО Чукотский, АО Ямало-Ненецкий, г Москва, Ханты-Мансийский АО - Югра, АО Ненецкий....
-					`}
-					price={210}
-					callback={() => moveCards(0)} />
+				{cardData.suppliers ? cardData.suppliers.map((el, i) => {
+					return (
+						<PriceCard
+							key={i}
+							item_id={id}
+							name={el.Name}
+							inn={el.Inn}
+							articul={el.Inn + 975}
+							region={cardData.regions.join(', ')}
+							price={cardData.price}
+							callback={() => moveCards(0)} />
+					);
+				}) : ''}
 			</div>
 		</>
 	);

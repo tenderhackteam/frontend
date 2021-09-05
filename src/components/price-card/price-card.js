@@ -1,23 +1,63 @@
-import React, { useState, useRef } from 'react';
+/*eslint-disable*/
+import React, { useState, useRef, useEffect } from 'react';
 import { css } from '@emotion/css';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import P from '../p';
 import RecomendCard from '../recomend-card';
+import { addToCart, generateNeuralByItem, getItemById } from '../../services/service';
 
 import succesIcon from '../../assets/svg/success.svg';
 import minusIcon from '../../assets/svg/minus.svg';
 import plusIcon from '../../assets/svg/plus.svg';
 
-const PriceCard = ({ name, inn, articul, region, price, callback }) => {
+const PriceCard = ({ item_id, name, inn, articul, region, price, callback }) => {
 	const [animState, setAnimState] = useState(0);
 	const [recomendBlock, setRecomendBlock] = useState();
+	const [recomendstions, setRecomendations] = useState([]);
 	const [score, setScore] = useState(1);
 
 	const buttonRef = useRef();
 	const successRef = useRef();
 	const scoreRef = useRef();
 	const recomendBlockRef = useRef();
+
+	useEffect(() => {
+		generateNeuralByItem(item_id).then(data => data.json()).then(data => JSON.parse(data).succedaneum)
+			.then(data => data.map(async (el, i) => {
+				getItemById(el)
+				.then(res => res.json()).then(res => res[0]).then(res => {
+					const _rec = recomendstions;
+					_rec.push(<RecomendCard
+						key={i}
+						category={res.category_id}
+						name={res.cte_name}
+						price={res.price}
+						id={res.cte_id}
+						count={res.made_contracts} />);
+					console.log(_rec);
+					setRecomendations(_rec);
+				});
+			}));
+		
+		
+		/*.then(data => data.json()).then(data => data.succedaneum).map(async (el, i) => {
+			const data = await getItemById(el);
+
+			return data.then(data => data.json())
+			.then(data => {
+				return (
+					<RecomendCard
+						key={i}
+						category={data[0].category_id}
+						name={data[0].cte_name}
+						price={data[0].price}
+						id={data[0].cte_id}
+						count={data[0].made_contracts} />
+				);
+			});
+		}).then(data => setRecomendations(data));*/
+	}, []);
 
 	function getButton() {
 		switch(animState) {
@@ -164,6 +204,8 @@ const PriceCard = ({ name, inn, articul, region, price, callback }) => {
 
 	function clickButton(e) {
 		e.preventDefault();
+		addToCart(item_id);
+		
 		buttonRef.current.style = 'opacity: 0;';
 		setTimeout(() => {
 			setAnimState(1);
@@ -206,30 +248,7 @@ const PriceCard = ({ name, inn, articul, region, price, callback }) => {
 						flex-wrap: wrap;
 					`}
 					>
-						<RecomendCard
-							category='Банкетки'
-							name='Банкетка фортепианная Yamaha BC-2647'
-							price={12129}
-							id={34860341}
-							count={2} />
-						<RecomendCard
-							category='Педали для рояля'
-							name='Педаль Vision AP-PD03'
-							price={1530}
-							id={34860341}
-							count={19} />
-						<RecomendCard
-							category='Мелкие аксессуары'
-							name='Держатель для планшета на рояль Vision AD-SA28'
-							price={1130}
-							id={34860341}
-							count={17} />
-						<RecomendCard
-							category='Банкетки'
-							name='Банкетка фортепианная Yamaha CX-6742'
-							price={9150}
-							id={34860341}
-							count={3} />
+						{recomendstions}
 					</div>
 				</Link>);
 			recomendBlockRef.current.style = 'opacity: 1';
@@ -322,7 +341,7 @@ const PriceCard = ({ name, inn, articul, region, price, callback }) => {
 						type='h1-black'
 					>
 						{price}
-						₽
+						1 000 ₽
 					</P>
 					<P
 						className={css`
@@ -366,6 +385,7 @@ PriceCard.propTypes = {
 	region: PropTypes.string,
 	price: PropTypes.number,
 	callback: PropTypes.func,
+	item_id: PropTypes.number,
 };
 
 export default PriceCard;
