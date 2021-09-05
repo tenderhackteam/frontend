@@ -1,6 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { css } from '@emotion/css';
-import { useParams } from 'react-router';
+import { useParams, useLocation, useHistory } from 'react-router';
+import { getImage } from '../services/service';
 
 import BreadCrumbs from '../components/bread-crumbs';
 import DemandedProducts from '../components/demanded-products';
@@ -10,13 +11,38 @@ import SocialCyrcle from '../components/social-cyrcle';
 import MenuItem from '../components/menu-item';
 import PriceCard from '../components/price-card';
 
-import demoImage from '../assets/img/demo_image.png';
 import printerIcon from '../assets/svg/printer.svg';
+import preloaderIcon from '../assets/svg/preloader.svg';
+import errorIcon from '../assets/svg/error.svg';
 
 const Card = () => {
-	const { category, id } = useParams();
+	const { category, name } = useParams();
+	const id = useLocation().search.slice(useLocation().search.indexOf('=') + 1);
+	const history = useHistory();
 
+	const [image, setImage] = useState();
 	const tableRef = useRef();
+	const startRef = useRef();
+
+	useEffect(() => {
+		history.listen((location) => {
+			startRef.current.scrollIntoView();
+			setImage(null);
+			console.log(location.search);
+			getImage(location.search.slice(location.search.indexOf('=') + 1)).then((data) => {
+				if(typeof data === 'string')
+					return data;
+				else
+					return data.text();
+			}).then((text) => setImage(text));
+		});
+		getImage(id).then((data) => {
+			if(typeof data === 'string')
+				return data;
+			else
+				return data.text();
+		}).then((text) => setImage(text));
+	}, []);
 
 	function moveCards(i) {
 		tableRef.current.children[i + 1].style = 'transform: translateY(368px)';
@@ -25,13 +51,55 @@ const Card = () => {
 		}, 600);
 	}
 
+	function getImageOrLoader() {
+		if(!image) {
+			return (
+				<div className={css`
+					margin-top: 28px;
+					width: 410px;
+					height: 263px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				`}
+				>
+					<img src={preloaderIcon} alt='preloader' />
+				</div>
+			);
+		}
+		else {
+			return (
+				<div className={css`
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					width: 410px;
+					height: 263px;
+				`}
+				>
+					<img
+						className={css`
+							margin-top: 28px;
+							object-fit: cover;
+							width: ${image === errorIcon ? '70px' : '410px'};
+							height: ${image === errorIcon ? '70px' : '263px'};
+						`}
+						src={image}
+						alt='card' />
+				</div>
+			);
+		}
+	}
+
 	return (
 		<>
-			<div className={css`
-			padding: 29px 55px;
-		`}
+			<div
+				className={css`
+					padding: 29px 55px;
+				`}
+				ref={startRef}
 			>
-				<BreadCrumbs elements={['Товары', category, id]} />
+				<BreadCrumbs elements={['Товары', category, name]} />
 				<div className={css`
 					width: fit-content;
 					display: grid;
@@ -69,15 +137,7 @@ const Card = () => {
 						<P type='regular-grey'>
 							Производитель: Bechstein
 						</P>
-						<img 
-							className={css`
-								margin-top: 28px;
-								width: 410px;
-								height: 263px;
-								object-fit: cover;
-							`}
-							src={demoImage}
-							alt='card' />
+						{getImageOrLoader()}
 					</div>
 					<div className={css`
 						margin-top: 30px;

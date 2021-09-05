@@ -11,6 +11,7 @@ const BreadCrumbs = ({ elements }) => {
 
 		array.forEach((el, i) => {
 			array_out.push(el);
+
 			if(i !== array.length - 1) {
 				array_out.push(
 					<img
@@ -18,6 +19,7 @@ const BreadCrumbs = ({ elements }) => {
 							margin: 0 11px;
 						`}
 						src={arrow}
+						key={i}
 						alt='Arrow' />);
 			}
 		});
@@ -30,7 +32,7 @@ const BreadCrumbs = ({ elements }) => {
 			flex-wrap: nowrap;
 		`}
 		>
-			{joinReactElements(elements.map((el, i) => <BreadCrumbsTitle title={el} key={i} />))}
+			{joinReactElements(elements.map((el, i) => <BreadCrumbsTitle title={el} key={10 + i} />))}
 		</div>
 	);
 };

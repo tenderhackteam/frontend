@@ -14,7 +14,7 @@ const MarginBottom = ({ children }) => {
 };
 
 MarginBottom.propTypes = {
-	children: PropTypes.element,
+	children: PropTypes.array,
 };
 
 export default MarginBottom;

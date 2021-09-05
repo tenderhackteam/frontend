@@ -74,7 +74,7 @@ const HeaderBlock = ({ type = 'classic', title, icon }) => {
 HeaderBlock.propTypes = {
 	type: PropTypes.oneOf(['menu']),
 	title: PropTypes.string,
-	icon: PropTypes.element,
+	icon: PropTypes.string,
 };
 
 export default HeaderBlock;

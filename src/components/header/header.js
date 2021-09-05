@@ -1,5 +1,6 @@
 import React from 'react';
 import { css } from '@emotion/css';
+import { Link } from 'react-router-dom';
 
 import HeaderBlock from '../header-block';
 import HeaderProfile from '../header-profile';
@@ -30,7 +31,9 @@ const Header = () => {
 				gap: 30px;
 			`}
 			>
-				<ContainImg src={logoIcon} alt='Logo' />
+				<Link to='/'>
+					<ContainImg src={logoIcon} alt='Logo' />
+				</Link>
 				<HeaderBlock type='menu' title='Меню' icon={menuIcon} />
 			</div>
 			<div className={css`

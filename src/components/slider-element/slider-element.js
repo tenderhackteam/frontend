@@ -1,25 +1,72 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { css } from '@emotion/css';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { getImage } from '../../services/service';
 
-import demoImage from '../../assets/img/demo_image.png';
+import preloaderIcon from '../../assets/svg/preloader.svg';
+import errorIcon from '../../assets/svg/error.svg';
 
-const SliderElement = ({ name, price, count }) => {
+const SliderElement = ({ category, name, id, price, count }) => {
+	const [image, setImage] = useState(preloaderIcon);
+
+	useEffect(() => {
+		getImage(id).then((res) => {
+			if(res === errorIcon)
+				return res;
+			else
+				return res.text();
+		}).then((text) => setImage(text));
+	}, []);
+
+	function getSize() {
+		switch (image) {
+			case preloaderIcon:
+				return {
+					height: '80px',
+					width: '55px',
+				};
+			case errorIcon:
+				return {
+					height: '70px',
+					width: '70px',
+				};
+			default:
+				return {
+					width: '160px',
+					height: '160px',
+				};
+		}
+	}
+
 	return (
-		<div className={css`
-			width: 208px;
-			height: 304px;
-		`}
+		<Link
+			className={css`
+				text-decoration: none;
+				display: block;
+				width: 208px;
+				height: 304px;
+			`}
+			to={`/catalog/${category}/${name}?id=${id}`}
 		>
-			<img
-				className={css`
-					width: 160px;
-					height: 160px;
-					object-fit: cover;
-					margin: 0 auto;
-				`}
-				src={demoImage}
-				alt='card' />
+			<div className={css`
+				width: 160px;
+				height: 160px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			`}
+			>
+				<img
+					className={css`
+						width: ${getSize().width};
+						height: ${getSize().height};
+						object-fit: cover;
+						margin: 0 auto;
+					`}
+					src={image}
+					alt='card' />
+			</div>
 			<p className={css`
 				margin: 16px 0 2px 0;
 				font-family: Open Sans;
@@ -60,12 +107,14 @@ const SliderElement = ({ name, price, count }) => {
 			>
 				{name}
 			</p>
-		</div>
+		</Link>
 	);
 };
 
 SliderElement.propTypes = {
 	name: PropTypes.string,
+	category: PropTypes.string,
+	id: PropTypes.number,
 	price: PropTypes.number,
 	count: PropTypes.number,
 };

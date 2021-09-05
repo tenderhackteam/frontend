@@ -116,12 +116,42 @@ const CatalogPage = () => {
 				justify-content: space-between;
 			`}
 			>
-				<SliderElement name='Папка файловая на 20 файлов Attache A4 16 мм...' price={73.1} count={2} />
-				<SliderElement name='Папка файловая на 20 файлов Attache A4 16 мм...' price={73.1} count={2} />
-				<SliderElement name='Папка файловая на 20 файлов Attache A4 16 мм...' price={73.1} count={2} />
-				<SliderElement name='Папка файловая на 20 файлов Attache A4 16 мм...' price={73.1} count={2} />
-				<SliderElement name='Папка файловая на 20 файлов Attache A4 16 мм...' price={73.1} count={2} />
-				<SliderElement name='Папка файловая на 20 файлов Attache A4 16 мм...' price={73.1} count={2} />
+				<SliderElement
+					id={34860341}
+					category='Бумага'
+					name='Папка файловая на 20 файлов Attache A4 16 мм...'
+					price={73.1}
+					count={2} />
+				<SliderElement
+					id={34860341}
+					category='Бумага'
+					name='Папка файловая на 20 файлов Attache A4 16 мм...'
+					price={73.1}
+					count={2} />
+				<SliderElement
+					id={34860341}
+					category='Бумага'
+					name='Папка файловая на 20 файлов Attache A4 16 мм...'
+					price={73.1}
+					count={2} />
+				<SliderElement
+					id={34860341}
+					category='Бумага'
+					name='Папка файловая на 20 файлов Attache A4 16 мм...'
+					price={73.1}
+					count={2} />
+				<SliderElement
+					id={34860341}
+					category='Бумага'
+					name='Папка файловая на 20 файлов Attache A4 16 мм...'
+					price={73.1}
+					count={2} />
+				<SliderElement
+					id={34860341}
+					category='Бумага'
+					name='Папка файловая на 20 файлов Attache A4 16 мм...'
+					price={73.1}
+					count={2} />
 			</div>
 			<p className={css`
 				margin-top: 100px;
@@ -141,12 +171,42 @@ const CatalogPage = () => {
 				justify-content: space-between;
 			`}
 			>
-				<SliderElement name='Папка файловая на 20 файлов Attache A4 16 мм...' price={73.1} count={2} />
-				<SliderElement name='Папка файловая на 20 файлов Attache A4 16 мм...' price={73.1} count={2} />
-				<SliderElement name='Папка файловая на 20 файлов Attache A4 16 мм...' price={73.1} count={2} />
-				<SliderElement name='Папка файловая на 20 файлов Attache A4 16 мм...' price={73.1} count={2} />
-				<SliderElement name='Папка файловая на 20 файлов Attache A4 16 мм...' price={73.1} count={2} />
-				<SliderElement name='Папка файловая на 20 файлов Attache A4 16 мм...' price={73.1} count={2} />
+				<SliderElement
+					id={34860341}
+					category='Бумага'
+					name='Папка файловая на 20 файлов Attache A4 16 мм...'
+					price={73.1}
+					count={2} />
+				<SliderElement
+					id={34860341}
+					category='Бумага'
+					name='Папка файловая на 20 файлов Attache A4 16 мм...'
+					price={73.1}
+					count={2} />
+				<SliderElement
+					id={34860341}
+					category='Бумага'
+					name='Папка файловая на 20 файлов Attache A4 16 мм...'
+					price={73.1}
+					count={2} />
+				<SliderElement
+					id={34860341}
+					category='Бумага'
+					name='Папка файловая на 20 файлов Attache A4 16 мм...'
+					price={73.1}
+					count={2} />
+				<SliderElement
+					id={34860341}
+					category='Бумага'
+					name='Папка файловая на 20 файлов Attache A4 16 мм...'
+					price={73.1}
+					count={2} />
+				<SliderElement
+					id={34860341}
+					category='Бумага'
+					name='Папка файловая на 20 файлов Attache A4 16 мм...'
+					price={73.1}
+					count={2} />
 			</div>
 			<p className={css`
 				margin-top: 100px;
@@ -166,12 +226,42 @@ const CatalogPage = () => {
 				justify-content: space-between;
 			`}
 			>
-				<SliderElement name='Папка файловая на 20 файлов Attache A4 16 мм...' price={73.1} count={2} />
-				<SliderElement name='Папка файловая на 20 файлов Attache A4 16 мм...' price={73.1} count={2} />
-				<SliderElement name='Папка файловая на 20 файлов Attache A4 16 мм...' price={73.1} count={2} />
-				<SliderElement name='Папка файловая на 20 файлов Attache A4 16 мм...' price={73.1} count={2} />
-				<SliderElement name='Папка файловая на 20 файлов Attache A4 16 мм...' price={73.1} count={2} />
-				<SliderElement name='Папка файловая на 20 файлов Attache A4 16 мм...' price={73.1} count={2} />
+				<SliderElement
+					id={34860341}
+					category='Бумага'
+					name='Папка файловая на 20 файлов Attache A4 16 мм...'
+					price={73.1}
+					count={2} />
+				<SliderElement
+					id={34860341}
+					category='Бумага'
+					name='Папка файловая на 20 файлов Attache A4 16 мм...'
+					price={73.1}
+					count={2} />
+				<SliderElement
+					id={34860341}
+					category='Бумага'
+					name='Папка файловая на 20 файлов Attache A4 16 мм...'
+					price={73.1}
+					count={2} />
+				<SliderElement
+					id={34860341}
+					category='Бумага'
+					name='Папка файловая на 20 файлов Attache A4 16 мм...'
+					price={73.1}
+					count={2} />
+				<SliderElement
+					id={34860341}
+					category='Бумага'
+					name='Папка файловая на 20 файлов Attache A4 16 мм...'
+					price={73.1}
+					count={2} />
+				<SliderElement
+					id={34860341}
+					category='Бумага'
+					name='Папка файловая на 20 файлов Attache A4 16 мм...'
+					price={73.1}
+					count={2} />
 			</div>
 		</div>
 	);

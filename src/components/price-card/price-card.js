@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { css } from '@emotion/css';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import P from '../p';
 import RecomendCard from '../recomend-card';
 
@@ -178,8 +179,10 @@ const PriceCard = ({ name, inn, articul, region, price, callback }) => {
 		}, 2100);
 		setTimeout(() => {
 			setRecomendBlock(
-				<div
+				<Link
 					className={css`
+						display: block;
+						text-decoration: none;
 						transition: all .4s;
 						padding: 0 54px;
 						opacity: 0;
@@ -207,24 +210,28 @@ const PriceCard = ({ name, inn, articul, region, price, callback }) => {
 							category='Банкетки'
 							name='Банкетка фортепианная Yamaha BC-2647'
 							price={12129}
+							id={34860341}
 							count={2} />
 						<RecomendCard
 							category='Педали для рояля'
 							name='Педаль Vision AP-PD03'
 							price={1530}
+							id={34860341}
 							count={19} />
 						<RecomendCard
 							category='Мелкие аксессуары'
 							name='Держатель для планшета на рояль Vision AD-SA28'
 							price={1130}
+							id={34860341}
 							count={17} />
 						<RecomendCard
 							category='Банкетки'
 							name='Банкетка фортепианная Yamaha CX-6742'
 							price={9150}
+							id={34860341}
 							count={3} />
 					</div>
-				</div>);
+				</Link>);
 			recomendBlockRef.current.style = 'opacity: 1';
 		}, 2700);
 	}

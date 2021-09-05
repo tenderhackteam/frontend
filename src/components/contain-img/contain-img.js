@@ -25,7 +25,7 @@ const ContainImg = ({ src, alt, size }) => {
 };
 
 ContainImg.propTypes = {
-	src: PropTypes.element,
+	src: PropTypes.string,
 	alt: PropTypes.string,
 	size: PropTypes.number,
 };

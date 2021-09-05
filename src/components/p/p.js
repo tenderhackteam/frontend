@@ -128,7 +128,7 @@ P.propTypes = {
 		'h1-black',
 		'grid-1',
 	]),
-	children: PropTypes.string,
+	children: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 };
 
 export default P;
